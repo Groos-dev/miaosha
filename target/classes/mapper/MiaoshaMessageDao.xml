@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cat.miaosha.dao.MiaoshaMessageDao">
+
+    <resultMap type="com.cat.miaosha.entity.MiaoshaMessage" id="MiaoshaMessageMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="messageid" column="messageid" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="overTime" column="over_time" jdbcType="TIMESTAMP"/>
+        <result property="messageType" column="message_type" jdbcType="INTEGER"/>
+        <result property="sendType" column="send_type" jdbcType="INTEGER"/>
+        <result property="goodName" column="good_name" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MiaoshaMessageMap">
+        select id,
+               messageid,
+               content,
+               create_time,
+               status,
+               over_time,
+               message_type,
+               send_type,
+               good_name,
+               price
+        from miaosha_message
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MiaoshaMessageMap">
+        select
+        id, messageid, content, create_time, status, over_time, message_type, send_type, good_name, price
+        from miaosha_message
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="messageid != null">
+                and messageid = #{messageid}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="overTime != null">
+                and over_time = #{overTime}
+            </if>
+            <if test="messageType != null">
+                and message_type = #{messageType}
+            </if>
+            <if test="sendType != null">
+                and send_type = #{sendType}
+            </if>
+            <if test="goodName != null and goodName != ''">
+                and good_name = #{goodName}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from miaosha_message
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="messageid != null">
+                and messageid = #{messageid}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="overTime != null">
+                and over_time = #{overTime}
+            </if>
+            <if test="messageType != null">
+                and message_type = #{messageType}
+            </if>
+            <if test="sendType != null">
+                and send_type = #{sendType}
+            </if>
+            <if test="goodName != null and goodName != ''">
+                and good_name = #{goodName}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into miaosha_message(messageid, content, create_time, status, over_time, message_type, send_type,
+                                    good_name, price)
+        values (#{messageid}, #{content}, #{createTime}, #{status}, #{overTime}, #{messageType}, #{sendType},
+                #{goodName}, #{price})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into miaosha_message(messageid, content, create_time, status, over_time, message_type, send_type,
+        good_name, price)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.messageid}, #{entity.content}, #{entity.createTime}, #{entity.status}, #{entity.overTime},
+            #{entity.messageType}, #{entity.sendType}, #{entity.goodName}, #{entity.price})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into miaosha_message(messageid, content, create_time, status, over_time, message_type, send_type,
+        good_name, price)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.messageid}, #{entity.content}, #{entity.createTime}, #{entity.status}, #{entity.overTime},
+            #{entity.messageType}, #{entity.sendType}, #{entity.goodName}, #{entity.price})
+        </foreach>
+        on duplicate key update
+        messageid = values(messageid),
+        content = values(content),
+        create_time = values(create_time),
+        status = values(status),
+        over_time = values(over_time),
+        message_type = values(message_type),
+        send_type = values(send_type),
+        good_name = values(good_name),
+        price = values(price)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update miaosha_message
+        <set>
+            <if test="messageid != null">
+                messageid = #{messageid},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="overTime != null">
+                over_time = #{overTime},
+            </if>
+            <if test="messageType != null">
+                message_type = #{messageType},
+            </if>
+            <if test="sendType != null">
+                send_type = #{sendType},
+            </if>
+            <if test="goodName != null and goodName != ''">
+                good_name = #{goodName},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from miaosha_message
+        where id = #{id}
+    </delete>
+
+</mapper>
+
