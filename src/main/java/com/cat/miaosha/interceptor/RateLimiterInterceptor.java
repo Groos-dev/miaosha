@@ -1,4 +1,4 @@
-package com.cat.miaosha.config.web;
+package com.cat.miaosha.interceptor;
 
 import com.cat.miaosha.common.contants.ResultStatus;
 import com.cat.miaosha.excption.BusinessException;

@@ -1,4 +1,4 @@
-package com.cat.miaosha.common.dto.req;
+package com.cat.miaosha.common.dto.rep;
 
 import lombok.Data;
 

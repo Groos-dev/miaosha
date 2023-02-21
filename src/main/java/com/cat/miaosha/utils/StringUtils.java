@@ -1,2 +1,9 @@
-package com.cat.miaosha.utils;public class StringUtils {
+package com.cat.miaosha.utils;
+
+/**
+ * @author Mr.xin
+ */
+public class StringUtils {
+
+
 }

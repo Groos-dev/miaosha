@@ -1,4 +1,4 @@
-package com.cat.miaosha.config.web;
+package com.cat.miaosha.interceptor;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.cat.miaosha.common.annotations.Access;
@@ -71,6 +71,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             // TODO: 2023/1/13 处理token续期问题
             id = JwtUtils.verifyToken(token);
         } catch (JWTVerificationException e) {
+            log.error("token parse error: {}",e.getMessage());
             return null;
         }
         assert id != null;
