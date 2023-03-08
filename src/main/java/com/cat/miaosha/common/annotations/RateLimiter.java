@@ -13,13 +13,4 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target({TYPE, METHOD})
 public @interface RateLimiter {
-//    /**
-//     * 时间窗口
-//     */
-//    int seconds() default 5;
-//
-//    /**
-//     * 访问次数
-//     */
-//    int maxCount() default 10;
 }

@@ -78,6 +78,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public String createOrder(Long userId, Long itemId, Long promoId, Integer amount) throws BusinessException, ExecutionException {
+        // todo 幂等操作
         //1.校验下单状态,下单的商品是否存在，用户是否合法，购买数量是否正确
         ItemDO itemDo = null;
         itemDo = RedisUtils.get(ITEM_PREFIX + itemId);

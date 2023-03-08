@@ -1,6 +1,7 @@
 package com.cat.miaosha.controller;
 
 import com.cat.miaosha.common.Result;
+import com.cat.miaosha.common.annotations.RateLimiter;
 import com.cat.miaosha.common.contants.ResultStatus;
 import com.cat.miaosha.common.vo.OrderVO;
 import com.cat.miaosha.entity.UserDO;
@@ -35,6 +36,7 @@ public class OrderController {
 
     //封装下单请求
     @PostMapping(value = "/createOrder")
+    @RateLimiter
     public Result<Object> createOrder(@NotNull(message = "商品不能为空") @RequestParam(name = "itemId") Long itemId,
                                       @NotNull(message = "数量不能为空") @RequestParam(name = "amount") Integer amount,
                                       @RequestParam(name = "promoId", required = false) Long promoId) throws BusinessException, ExecutionException {
