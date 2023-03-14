@@ -27,8 +27,7 @@ public class TransactionListenerImpl implements TransactionListener {
     public LocalTransactionState checkLocalTransaction(MessageExt messageExt) {
         String body = new String(messageExt.getBody());
         Map<String, Object> msg = JsonUtils.jsonToObject(body, Map.class);
-        OrderDO order = (OrderDO)msg.get("order");
-        String id = order.getId();
+        String id = (String)msg.get("orderId");
         OrderDO orderDO = orderDOMapper.selectByPrimaryKey(id);
         if(orderDO == null){
             return LocalTransactionState.ROLLBACK_MESSAGE;
